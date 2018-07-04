@@ -1,0 +1,33 @@
+当前环境描述：Win10 64位，Python3.6
+目标：安装使用TensorFlow1.6-GPU
+所需文件：Cuda9.0、Cudnn7.0
+注意：安装Cuda9.1 & Cudnn7.1的环境下将不能正常使用TF1.6-GPU
+（注：CUDA和CUDNN版本要配套）
+
+在这里下载CUDA9.0，直接进入CUDA下载界面默认是最新的CUDA版本：
+https://developer.nvidia.com/cuda-90-download-archive?target_os=Windows&target_arch=x86_64&target_version=10
+直接安装，该安装会自动添加系统环境变量。安装完成后，可以在shell中输入nvcc -V查看CUDA版本
+
+在这里下载CUDNN7.0：
+https://developer.nvidia.com/rdp/cudnn-download
+解压后，cuda中有三个目录：bin，include，lib，将这三个目录中的三个文件cudnn64_7.dll,
+cudnn.h，x64\\cudnn.lib分别复制到c:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v9.0\\
+下面对应的bin，include，lib\\x64中
+（先试了直接在系统环境变量中直接添加CUDNN的目录，但是在import时会报错找不到cudnn64_7.dll,
+而直接复制这3个文件便可以不用再添加CUDNN目录到系统环境变量。怀疑添加CUDNN目录到系统环境变量
+时变量名不对？或许可以试试变量名仿照CUDA自动添加时产生的环境变量名：CUDNN_PATH?）
+
+创建anaconda新环境：
+conda create --name tensorflow python=3.6
+
+激活这个环境
+activate tensorflow（）
+（注：激活某个环境后就可以用spyder命令直接打开这个环境下的spyder）
+
+查看所有环境
+conda info --envs
+
+在这个新环境中安装tensorflow 1.6：
+pip install --ignore-installed --upgrade tensorflow-gpu==1.6.0
+（注：用conda install tensorflow-gpu的话，可以不用自己安装CUDA和CUDNN，因为conda会自动安装
+CUDA 8.0和CUDNN 6.0，但是import时也会报错找不到cudnn64_6.dll，应该可以用上面复制文件类似的办法解决）
